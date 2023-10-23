@@ -1,45 +1,45 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 
-const Hello = (props) => {
-  console.log(props)
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing buttons
+      </div>
+    )
+  }
+
   return (
     <div>
-      <p>Hello World {props.name}, you are {props.age}</p>
+      button press history: {props.allClicks.join(' ')}
     </div>
   )
 }
 
-const Footer = () => {
-  return (
-    <>
-    <div>
-      greeting app created by <a href='https://github.com/mluukkai'>mluukkai</a>
-    </div>
-    </>
-  )
-}
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>
+    {text}
+  </button>
+)
 
-function App() {
-  const now = new Date()
-  const a = 10
-  const b = 20
-  const name = 'Varin'
-  const age = 33
-  console.log(now, a+b)
+// Do not define components inside another component
+const Display = props => <div>{props.value}</div>
+
+const App = () => {
+  const [value, setValue] = useState(10)
+
+  const setToValue = (newValue) => () => {
+    console.log('value now', newValue)  // print the new value to console
+    setValue(newValue)
+  }
 
   return (
     <div>
-      <p>Hello World, it is {now.toString()}</p>
-      <p>
-        {a} plus {b} is {a + b}
-      </p>
-      <Hello name='Jaggi'age={26+10}/>
-      <Hello name={name} age={age}/>
-      <Footer />
+      <Display value={value} />
+      <Button handleClick={() => setToValue(1000)} text="thousand" />
+      <Button handleClick={() => setToValue(0)} text="reset" />
+      <Button handleClick={() => setToValue(value + 1)} text="increment" />
     </div>
   )
 }
-
 export default App

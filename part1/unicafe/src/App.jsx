@@ -1,72 +1,37 @@
-const Header = (props) => {
-  return (
-    <>
-      <h1>
-        {props.course}
-      </h1>
-    </>
-  )
-}
-
-const Part = (props) => {
-  return (
-    <>
-      <p>
-        {props.curpart} {props.curexercises}
-      </p>
-    </>
-  )
-}
-
-const Content = (props) => {
-  console.log(props)
-
-  return (
-    <>
-      {props.parts.map((value,index) => (
-        <Part key={index} curpart={value.name} curexercises={value.exercises}/>
-      ))}
-    </>
-  )
-}
-
-const Total = (props) => {
-  let totalSum = 0
-
-  props.parts.forEach(element => {
-    totalSum += element.exercises
-  });
-  return (
-    <>
-      <p>Number of exercises {totalSum}</p>
-    </>
-  )
-}
+import { useState } from 'react'
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  const handleClick = (id) => () => {
+    if (id === "good") {
+      setGood(good + 1)
+    }
+
+    else if (id === "neutral") {
+      setNeutral(neutral + 1)
+    }
+
+    else {
+      setBad(bad + 1)
+    }
   }
 
   return (
     <div>
-      <Header course={course.name}/>
-      <Content parts={course.parts}/>
-      <Total parts={course.parts}/>
+      <h1>Give Feedback!</h1>
+      <button onClick={handleClick('good')}>good</button>
+      <button onClick={handleClick('neutral')}>neutral</button>
+      <button onClick={handleClick('bad')}>bad</button>
+      
+      <h2>Statistics</h2>
+
+      <p>good {good}</p>
+      <p>neutral {neutral}</p>
+      <p>bad {bad}</p>
     </div>
   )
 }
