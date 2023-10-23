@@ -6,7 +6,10 @@ const calcAverage = (props) => {
 
 const StatisticLine = (props) => {
   return (
-    <p>{props.text} {props.value}</p>
+    <>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </>
   )
 }
 
@@ -16,6 +19,10 @@ const Button = (props) => {
       <button onClick={props.onClick}>{props.text}</button>
     </>
   )
+}
+
+const calcPositive = (props) => {
+  return ((props.good / (props.good+props.bad+props.neutral)) * 100)
 }
 
 const App = () => {
@@ -48,12 +55,28 @@ const App = () => {
         
         <h2>Statistics</h2>
   
-        <StatisticLine text="good" value={good}/>
-        <StatisticLine text="neutral" value={neutral}/>
-        <StatisticLine text="bad" value={bad}/>
-        <StatisticLine text="all" value={good+neutral+bad}/>
-        <StatisticLine text="average" value={calcAverage({good,neutral,bad})}/>
-        <StatisticLine text="positive" value={(good / (good+bad+neutral)) * 100}/>
+        <table>
+          <tbody>
+            <tr>
+              <StatisticLine text="good" value={good}/>
+            </tr>
+            <tr>
+              <StatisticLine text="neutral" value={neutral}/>
+            </tr>
+            <tr>
+              <StatisticLine text="bad" value={bad}/>
+            </tr>
+            <tr>
+              <StatisticLine text="all" value={good+neutral+bad}/>
+            </tr>
+            <tr>
+              <StatisticLine text="average" value={calcAverage({good,neutral,bad}).toFixed(2)}/>
+            </tr>
+            <tr>
+              <StatisticLine text="positive" value={calcPositive({good,neutral,bad}).toFixed(1)}/>
+            </tr>
+          </tbody>
+        </table>
       </div>
     )
   }
