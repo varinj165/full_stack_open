@@ -1,5 +1,24 @@
 import { useState } from 'react'
 
+const DisplayMostVotes = (props) => {
+  let maxElement = 0
+  let maxIndex = 0
+
+  props.votes.forEach((element, i) => {
+    if (element > maxElement) {
+      maxElement = element
+      maxIndex = i
+    }
+  })
+
+  return (
+    <>
+      <p>{props.anecdotes[maxIndex]}</p>
+      <p>has {maxElement} votes</p>
+    </>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -28,10 +47,13 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>Has {votes[selected]} votes</p>
       <button onClick={handleVoteClick}>vote</button>
       <button onClick={handleNextClick}>next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <DisplayMostVotes votes={votes} anecdotes={anecdotes}/>
     </div>
   )
 }
