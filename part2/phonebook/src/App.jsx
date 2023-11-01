@@ -19,8 +19,12 @@ const App = () => {
       name: newName,
       id: newName
     }
-    
-    setPersons([...persons,newPerson])
+
+    if (persons.some(person => person.name === newPerson.name)) {
+      alert(`${newName} is already added to phonebook`)
+    } else {
+      setPersons([...persons,newPerson])
+    }
   }
 
   return (
