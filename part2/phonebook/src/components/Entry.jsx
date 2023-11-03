@@ -1,9 +1,17 @@
 const Entry = ({ name, number, search }) => {
-    if (search !== "") {
+    const lowerCaseName = name.toLowerCase()
 
+    if (search !== "") {
+        if (lowerCaseName.includes(search.toLowerCase())) {
+            return (
+                <p>{name} {number}</p>
+            )
+        } else {
+            return (<></>)
+        }
     } else {
         return (
-            <p key={name}>{name} {number}</p>
+            <p>{name} {number}</p>
         )
     }
 }
